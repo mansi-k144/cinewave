@@ -10,8 +10,10 @@ const VideoStoreProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const baseURL = process.env.REACT_APP_BACKEND_URL;
+
         // Fetch movies
-        const moviesResponse = await fetch("https://cinewave-api.onrender.com/movies");
+        const moviesResponse = await fetch(`${baseURL}/movies`);
         if (!moviesResponse.ok) {
           throw new Error("Failed to fetch movies");
         }
@@ -19,7 +21,7 @@ const VideoStoreProvider = ({ children }) => {
         setMovies(moviesData);
 
         // Fetch TV shows
-        const tvShowsResponse = await fetch("https://cinewave-api.onrender.com/tvShows");
+        const tvShowsResponse = await fetch(`${baseURL}/tvShows`);
         if (!tvShowsResponse.ok) {
           throw new Error("Failed to fetch TV shows");
         }
