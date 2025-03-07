@@ -10,7 +10,6 @@ const Footer = () => {
     display: "flex",
     flexDirection: "column",
     borderTop: "2px solid #FFD700",
-    // marginTop: "20px",
     fontSize: "14px",
   };
 
@@ -18,11 +17,14 @@ const Footer = () => {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "20px",
+    flexWrap: "wrap", // Makes items wrap for smaller screens
   };
 
   const columnStyle = {
     flex: "1",
     marginRight: "10px",
+    marginBottom: "20px", // Adds spacing for smaller screens
+    minWidth: "150px", // Ensures columns stay readable on small screens
   };
 
   const listHeadingStyle = {
@@ -40,8 +42,11 @@ const Footer = () => {
 
   const bottomSectionStyle = {
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection: "column", // Stack items vertically on smaller screens
+    justifyContent: "center",
     alignItems: "center",
+    textAlign: "center",
+    gap: "10px",
   };
 
   const socialMediaIconContainerStyle = {
@@ -60,8 +65,28 @@ const Footer = () => {
     color: "#FFFFFF",
   };
 
+  // Media query for smaller screens
+  const mediaQueryStyle = `
+    @media (max-width: 768px) {
+      footer {
+        font-size: 12px;
+      }
+
+      .footer-top-section {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-bottom-section {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  `;
+
   return (
     <footer style={footerStyle}>
+      <style>{mediaQueryStyle}</style>
       {/* Top Section with Lists */}
       <div style={topSectionStyle}>
         <div style={columnStyle}>
