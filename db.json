@@ -1,0 +1,266 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "poster": "/assets/movies/inception.jpg",
+      "synopsis": "A thief uses dream-sharing technology to perform corporate espionage.",
+      "genre": "Sci-Fi",
+      "releaseYear": 2010,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 2,
+      "title": "The Dark Knight",
+      "poster": "/assets/movies/dark_knight.jpg",
+      "synopsis": "Batman faces the Joker's chaos in Gotham City.",
+      "genre": "Action",
+      "releaseYear": 2008,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 3,
+      "title": "Interstellar",
+      "poster": "/assets/movies/interstellar.jpg",
+      "synopsis": "Explorers travel through a wormhole to save humanity.",
+      "genre": "Adventure",
+      "releaseYear": 2014,
+      "rentPrice": 4.99,
+      "buyPrice": 19.99
+    },
+    {
+      "id": 4,
+      "title": "The Matrix",
+      "poster": "/assets/movies/matrix.jpg",
+      "synopsis": "A hacker discovers the truth about his reality and becomes a hero.",
+      "genre": "Sci-Fi",
+      "releaseYear": 1999,
+      "rentPrice": 3.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 5,
+      "title": "Avatar",
+      "poster": "/assets/movies/avatar.jpg",
+      "synopsis": "A marine on an alien planet becomes part of a revolution.",
+      "genre": "Sci-Fi",
+      "releaseYear": 2009,
+      "rentPrice": 3.99,
+      "buyPrice": 15.99
+    },
+    {
+      "id": 6,
+      "title": "The Shawshank Redemption",
+      "poster": "/assets/movies/shawshank.jpg",
+      "synopsis": "Two imprisoned men bond and find hope in redemption.",
+      "genre": "Drama",
+      "releaseYear": 1994,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 7,
+      "title": "Jurassic Park",
+      "poster": "/assets/movies/jurassic_park.jpg",
+      "synopsis": "A theme park of cloned dinosaurs goes awry.",
+      "genre": "Adventure",
+      "releaseYear": 1993,
+      "rentPrice": 2.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 8,
+      "title": "Titanic",
+      "poster": "/assets/movies/titanic.jpg",
+      "synopsis": "A love story set against the ill-fated Titanic.",
+      "genre": "Adventure",
+      "releaseYear": 1997,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 9,
+      "title": "Gladiator",
+      "poster": "/assets/movies/gladiator.jpg",
+      "synopsis": "A betrayed Roman general seeks vengeance.",
+      "genre": "Drama",
+      "releaseYear": 2000,
+      "rentPrice": 3.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 10,
+      "title": "Forrest Gump",
+      "poster": "/assets/movies/forrest_gump.jpg",
+      "synopsis": "A man's life journey through pivotal moments in history.",
+      "genre": "Drama",
+      "releaseYear": 1994,
+      "rentPrice": 3.99,
+      "buyPrice": 13.99
+    },
+    {
+      "id": 11,
+      "title": "Avengers: Endgame",
+      "poster": "/assets/movies/endgame.jpg",
+      "synopsis": "The Avengers assemble for a final battle.",
+      "genre": "Action",
+      "releaseYear": 2021,
+      "rentPrice": 4.99,
+      "buyPrice": 19.99
+    },
+    {
+      "id": 12,
+      "title": "The Lion King",
+      "poster": "/assets/movies/lion_king.jpg",
+      "synopsis": "A lion cub grows up and takes his rightful place as king.",
+      "genre": "Drama",
+      "releaseYear": 2004,
+      "rentPrice": 2.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 13,
+      "title": "Oppenheimer",
+      "poster": "/assets/movies/most_demanded_movie.jpg",
+      "synopsis": "This is a popular movie released in 2021.",
+      "genre": "Action",
+      "releaseYear": 2021,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    }
+  ],
+  "tvShows": [
+    {
+      "id": 1,
+      "title": "Breaking Bad",
+      "poster": "/assets/tvShows/breaking_bad.jpg",
+      "synopsis": "A teacher turns to crime after a cancer diagnosis.",
+      "genre": "Crime",
+      "releaseYear": 2008,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 2,
+      "title": "Stranger Things",
+      "poster": "/assets/tvShows/stranger_things.jpg",
+      "synopsis": "Kids uncover supernatural mysteries.",
+      "genre": "Sci-Fi",
+      "releaseYear": 2016,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 3,
+      "title": "The Office",
+      "poster": "/assets/tvShows/the_office.jpg",
+      "synopsis": "Comical lives of paper company employees.",
+      "genre": "Comedy",
+      "releaseYear": 2005,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 4,
+      "title": "Game of Thrones",
+      "poster": "/assets/tvShows/got.jpg",
+      "synopsis": "Noble families vie for control of the Iron Throne.",
+      "genre": "Fantasy",
+      "releaseYear": 2011,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 5,
+      "title": "Modern Family",
+      "poster": "/assets/tvShows/modern_family.jpg",
+      "synopsis": "A comedy about the intertwined lives of three diverse families navigating modern-day life.",
+      "genre": "Comedy",
+      "releaseYear": 2009,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 6,
+      "title": "The Mandalorian",
+      "poster": "/assets/tvShows/mandalorian.jpg",
+      "synopsis": "A lone bounty hunter journeys through the galaxy.",
+      "genre": "Sci-Fi",
+      "releaseYear": 2019,
+      "rentPrice": 3.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 7,
+      "title": "Sherlock",
+      "poster": "/assets/tvShows/sherlock.jpg",
+      "synopsis": "Modern-day Sherlock Holmes solves mysteries.",
+      "genre": "Crime",
+      "releaseYear": 2010,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    },
+    {
+      "id": 8,
+      "title": "The Simpsons",
+      "poster": "/assets/tvShows/simpsons.jpg",
+      "synopsis": "A satirical look at a dysfunctional American family.",
+      "genre": "Comedy",
+      "releaseYear": 1989,
+      "rentPrice": 2.99,
+      "buyPrice": 8.99
+    },
+    {
+      "id": 9,
+      "title": "The Crown",
+      "poster": "/assets/tvShows/the_crown.jpg",
+      "synopsis": "The reign of Queen Elizabeth II.",
+      "genre": "Drama",
+      "releaseYear": 2016,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 10,
+      "title": "Westworld",
+      "poster": "/assets/tvShows/westworld.jpg",
+      "synopsis": "An amusement park of AI robots goes rogue.",
+      "genre": "Sci-Fi",
+      "releaseYear": 2016,
+      "rentPrice": 3.99,
+      "buyPrice": 14.99
+    },
+    {
+      "id": 11,
+      "title": "The Witcher",
+      "poster": "/assets/tvShows/witcher.jpg",
+      "synopsis": "A monster hunter's adventures in a mythical world.",
+      "genre": "Fantasy",
+      "releaseYear": 2021,
+      "rentPrice": 3.99,
+      "buyPrice": 12.99
+    },
+    {
+      "id": 12,
+      "title": "House of Cards",
+      "poster": "/assets/tvShows/house_of_cards.jpg",
+      "synopsis": "A ruthless politician schemes for power in Washington.",
+      "genre": "Drama",
+      "releaseYear": 2013,
+      "rentPrice": 2.99,
+      "buyPrice": 10.99
+    },
+    {
+      "id": 13,
+      "title": "Friends",
+      "poster": "/assets/tvShows/most_demanded_tv_show.jpg",
+      "synopsis": "The lives of six friends in New York City.",
+      "genre": "Comedy",
+      "releaseYear": 2021,
+      "rentPrice": 2.99,
+      "buyPrice": 9.99
+    }
+  ]
+}
