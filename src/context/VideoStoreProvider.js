@@ -11,7 +11,7 @@ const VideoStoreProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         // Fetch movies
-        const moviesResponse = await fetch("http://localhost:3001/movies");
+        const moviesResponse = await fetch("https://cinewave-api.onrender.com/movies");
         if (!moviesResponse.ok) {
           throw new Error("Failed to fetch movies");
         }
@@ -19,7 +19,7 @@ const VideoStoreProvider = ({ children }) => {
         setMovies(moviesData);
 
         // Fetch TV shows
-        const tvShowsResponse = await fetch("http://localhost:3001/tvShows");
+        const tvShowsResponse = await fetch("https://cinewave-api.onrender.com/tvShows");
         if (!tvShowsResponse.ok) {
           throw new Error("Failed to fetch TV shows");
         }
