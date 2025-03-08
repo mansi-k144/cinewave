@@ -6,6 +6,9 @@ const FeaturedMovies = () => {
   const { movies } = useContext(VideoStoreContext); // Access movies from context
   const navigate = useNavigate(); // Initialize navigation function
 
+  // Pre-sliced movies for display
+  const featuredMovies = movies.slice(0, 6);
+
   // Function to handle navigation to the details page
   const handleMovieClick = (id) => {
     navigate(`/moviedetails/${id}`); // Navigate to the details page of the clicked movie
@@ -60,10 +63,6 @@ const FeaturedMovies = () => {
     transition: "transform 0.3s ease",
   };
 
-  const movieCardHoverStyle = { 
-    transform: "scale(1.05)", // Adds a hover effect
-     };
-
   const movieImageStyle = {
     width: "100%",
     height: "300px",
@@ -88,13 +87,12 @@ const FeaturedMovies = () => {
 
       <h2 style={headingStyle}>Featured Movies</h2>
       <div style={movieContainerStyle}>
-        {movies.slice(0, 6).map((movie) => (
+        {featuredMovies.map((movie) => (
           <div
             key={movie.id}
             style={movieCardStyle}
             onClick={() => handleMovieClick(movie.id)} // Trigger navigation
-
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")} // Hover effect 
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")} // Hover effect
             onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}>
             <img
               src={movie.poster}

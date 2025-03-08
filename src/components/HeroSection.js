@@ -8,12 +8,7 @@ const HeroSection = () => {
   const { movies, tvShows } = useContext(VideoStoreContext); // Access data from context
   const navigate = useNavigate();
 
-  const handleMovieClick = (id) => {
-    navigate(`/moviedetails/${id}`); // Navigate to the details page of the clicked movie
-  }
-  const handleShowClick = (id) => {
-    navigate(`/tvdetails/${id}`); // Navigate to the details page of the clicked TV show
-  };
+ 
   // Combine and filter for movies/TV shows of 2021
   const slides = [
     ...movies.filter((movie) => movie.releaseYear === 2021),

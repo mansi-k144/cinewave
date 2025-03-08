@@ -8,33 +8,30 @@ const VideoStoreProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const baseURL = process.env.REACT_APP_BACKEND_URL;
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
 
-        // Fetch movies
-        const moviesResponse = await fetch(`${baseURL}/movies`);
-        if (!moviesResponse.ok) {
+    // Fetch movies
+    fetch(`${baseURL}/movies`)
+      .then((response) => {
+        if (!response.ok) {
           throw new Error("Failed to fetch movies");
         }
-        const moviesData = await moviesResponse.json();
-        setMovies(moviesData);
+        return response.json();
+      })
+      .then((moviesData) => setMovies(moviesData))
+      .catch((error) => console.error("Error fetching movies:", error));
 
-        // Fetch TV shows
-        const tvShowsResponse = await fetch(`${baseURL}/tvShows`);
-        if (!tvShowsResponse.ok) {
+    // Fetch TV shows
+    fetch(`${baseURL}/tvShows`)
+      .then((response) => {
+        if (!response.ok) {
           throw new Error("Failed to fetch TV shows");
         }
-        const tvShowsData = await tvShowsResponse.json();
-        setTVShows(tvShowsData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Set loading to false after data is fetched (or if an error occurs)
-      }
-    };
-
-    fetchData(); // Call the fetchData function
+        return response.json();
+      })
+      .then((tvShowsData) => setTVShows(tvShowsData))
+      .catch((error) => console.error("Error fetching TV shows:", error))
+      .finally(() => setLoading(false)); // Set loading to false after both fetches are complete
   }, []);
 
   return (

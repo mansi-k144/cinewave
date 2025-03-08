@@ -6,6 +6,9 @@ const FeaturedTVShows = () => {
   const { tvShows } = useContext(VideoStoreContext); // Access TV shows from context
   const navigate = useNavigate(); // Initialize navigation function
 
+  // Pre-sliced TV Shows for display
+  const featuredTVShows = tvShows.slice(0, 6);
+
   // Function to handle navigation to the details page
   const handleShowClick = (id) => {
     navigate(`/tvdetails/${id}`); // Navigate to the details page of the clicked TV show
@@ -84,7 +87,7 @@ const FeaturedTVShows = () => {
 
       <h2 style={headingStyle}>Featured TV Shows</h2>
       <div style={tvShowContainerStyle}>
-        {tvShows.slice(0, 6).map((show) => (
+        {featuredTVShows.map((show) => (
           <div
             key={show.id}
             style={tvShowCardStyle}
