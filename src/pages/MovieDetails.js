@@ -1,30 +1,42 @@
 import React, { useContext } from "react";
-
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { VideoStoreContext } from "../context/VideoStoreProvider";
-import { useNavigate } from "react-router-dom";
 
 const MovieDetails = () => {
-  const { id } = useParams(); // Get the movie ID from the URL
-  const { movies, loading } = useContext(VideoStoreContext); // Access movies from context
-  const navigate = useNavigate(); // For navigating to similar movie details
+  const { id } = useParams();
+  const { movies, loading } = useContext(VideoStoreContext);
+  const navigate = useNavigate();
 
   if (loading) {
-    return <div style={{ color: "black", textAlign: "center" }}>Loading...</div>; // Show a loading message
+    return <div style={{ color: "black", textAlign: "center" }}>Loading...</div>;
   }
 
-  // Find the specific movie by ID
-  const movie = movies.find((movie) => movie.id == parseInt(id));
-
-  // If movie is not found, show a message
+  // Safely find the movie and handle undefined cases
+  const movie = movies.find((m) => m.id === id); // Use strict equality
+  
   if (!movie) {
-    return <h2 style={{ color: "white", textAlign: "center" }}>Movie not found.</h2>;
+    return (
+      <div style={{ color: "white", textAlign: "center", padding: "20px" }}>
+        <h2>Movie not found</h2>
+        <button onClick={() => navigate("/movies")} style={{ 
+          padding: "10px 20px",
+          backgroundColor: "#FFD700",
+          color: "#000",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+          marginTop: "10px"
+        }}>
+          Back to Movies
+        </button>
+      </div>
+    );
   }
 
-  // Filter similar genre movies (excluding the current movie)
+  // Safely get similar movies
   const similarMovies = movies.filter(
-    (m) => m.genre === movie.genre && m.id !== movie.id
-  );
+    (m) => m.id !== movie.id && m.genre === movie.genre
+  ).slice(0, 4); // Limit to 4 similar movies
 
   // Styling for the page
   const pageStyle = {
@@ -160,30 +172,38 @@ const MovieDetails = () => {
     textAlign: "center",
   };
 
-  return (
 
-    <div style={pageStyle}>
-    
-      {/* Background with Small Poster and Details */}
-      <div style={backgroundStyle}>
-        <div style={overlayStyle}>
-          <img
-            src={movie.poster}
-            alt={`Small poster of ${movie.title}`}
-            style={smallPosterStyle}
-          />
-          <div style={detailsStyle}>
-            <h2 style={titleStyle}>{movie.title}</h2>
-            <p style={synopsisStyle}>{movie.synopsis}</p>
-            <div style={priceStyle}>
-              <div style={priceItemStyle}>Rent: ${movie.rentPrice.toFixed(2)}</div>
-              <div style={priceItemStyle}>Buy: ${movie.buyPrice.toFixed(2)}</div>
+return (
+  <div style={pageStyle}>
+    {/* Background with Small Poster and Details */}
+    <div style={backgroundStyle}>
+      <div style={overlayStyle}>
+        <img
+          src={movie.poster}
+          alt={`Poster of ${movie.title}`}
+          style={smallPosterStyle}
+          onError={(e) => {
+            e.target.onerror = null; 
+            e.target.src = "/placeholder-poster.jpg"; // Fallback image
+          }}
+        />
+        <div style={detailsStyle}>
+          <h2 style={titleStyle}>{movie.title}</h2>
+          <p style={synopsisStyle}>{movie.synopsis || "No synopsis available"}</p>
+          <div style={priceStyle}>
+            <div style={priceItemStyle}>
+              Rent: ${movie.rentPrice?.toFixed(2) || "N/A"}
+            </div>
+            <div style={priceItemStyle}>
+              Buy: ${movie.buyPrice?.toFixed(2) || "N/A"}
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Similar Movies Section */}
+    {/* Similar Movies Section */}
+    {similarMovies.length > 0 && (
       <div style={similarMoviesContainerStyle}>
         <h2 style={similarMoviesTitleStyle}>Similar Movies</h2>
         <div style={gridStyle}>
@@ -191,7 +211,7 @@ const MovieDetails = () => {
             <div
               key={similarMovie.id}
               style={movieCardStyle}
-              onClick={() => navigate(`/moviedetails/${similarMovie.id}`)} // Navigate to the similar movie details
+              onClick={() => navigate(`/moviedetails/${similarMovie.id}`)}
               onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
               onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
@@ -199,15 +219,21 @@ const MovieDetails = () => {
                 src={similarMovie.poster}
                 alt={`Poster of ${similarMovie.title}`}
                 style={movieImageStyle}
+                onError={(e) => {
+                  e.target.onerror = null; 
+                  e.target.src = "/placeholder-poster.jpg";
+                }}
               />
-              <h3 style={movieTitleStyle}>{similarMovie.title}</h3>
+              <h3 style={movieTitleStyle}>
+                {similarMovie.title}
+              </h3>
             </div>
           ))}
         </div>
       </div>
-    </div>
-    
-  );
+    )}
+  </div>
+);
 };
 
 export default MovieDetails;

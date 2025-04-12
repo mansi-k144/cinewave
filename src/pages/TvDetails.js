@@ -1,43 +1,57 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { VideoStoreContext } from "../context/VideoStoreProvider";
-import { useNavigate } from "react-router-dom";
-
 
 const TVDetails = () => {
   const { id } = useParams();
   const { tvShows, loading } = useContext(VideoStoreContext);
   const navigate = useNavigate();
 
-
-
-  // Show loading message if data is still being fetched
   if (loading) {
-    return <div style={{ color: "black", textAlign: "center" }}>Loading...</div>;
+    return <div style={{ 
+      color: "white", 
+      textAlign: "center", 
+      padding: "40px",
+      backgroundColor: "#2C3E50"
+    }}>Loading TV show details...</div>;
   }
 
-  // Safely check if tvShows data is available
-  if (!tvShows || tvShows.length === 0) {
-    return <div style={{ color: "white", textAlign: "center" }}>Loading...</div>;
-  }
+  // Safely find the TV show
+  const tvShow = tvShows?.find((show) => show.id === id); // Use strict equality
 
-  // Find the specific TV show by ID
-  const tvShow = tvShows.find((tvShow) => tvShow.id == parseInt(id));
-
-  // Handle case where TV show is not found
   if (!tvShow) {
     return (
-      <div style={{ color: "white", textAlign: "center", padding: "20px" }}>
-        <h2>TV Show not found.</h2>
-        <p>The TV show you are looking for does not exist or may have been removed.</p>
+      <div style={{ 
+        color: "white", 
+        textAlign: "center", 
+        padding: "40px",
+        backgroundColor: "#2C3E50"
+      }}>
+        <h2>TV Show not found</h2>
+        <p>We couldn't find the show you're looking for.</p>
+        <button 
+          onClick={() => navigate("/tvshows")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#FFD700",
+            color: "#000",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginTop: "20px"
+          }}
+        >
+          Browse TV Shows
+        </button>
       </div>
     );
   }
 
-  // Filter similar genre TV shows (excluding the current TV show)
-  const similarShows = tvShows.filter(
-    (show) => show.genre === tvShow.genre && show.id !== tvShow.id
-  );
+  // Get similar shows with safety checks
+  const similarShows = tvShows?.filter(
+    (show) => show.id !== id && show.genre === tvShow.genre
+  ).slice(0, 4) || []; // Limit to 4 shows
+
 
   // Styling for the page
   const pageStyle = {
@@ -170,51 +184,67 @@ const TVDetails = () => {
   };
 
   return (
-   
     <div style={pageStyle}>
-      {/* Background with Small Poster and Details */}
+      {/* Main TV Show Details */}
       <div style={backgroundStyle}>
         <div style={overlayStyle}>
           <img
             src={tvShow.poster}
-            alt={`Small poster of ${tvShow.title}`}
+            alt={`Poster for ${tvShow.title}`}
             style={smallPosterStyle}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/default-poster.jpg"; // Fallback image
+            }}
           />
           <div style={detailsStyle}>
-            <h2 style={titleStyle}>{tvShow.title}</h2>
-            <p style={synopsisStyle}>{tvShow.synopsis}</p>
+            <h2 style={titleStyle}>{tvShow.title || "Untitled TV Show"}</h2>
+            <p style={synopsisStyle}>
+              {tvShow.synopsis || "No synopsis available."}
+            </p>
             <div style={priceStyle}>
-              <div style={priceItemStyle}>Rent: ${tvShow.rentPrice.toFixed(2)}</div>
-              <div style={priceItemStyle}>Buy: ${tvShow.buyPrice.toFixed(2)}</div>
+              <div style={priceItemStyle}>
+                Rent: ${tvShow.rentPrice?.toFixed(2) || "N/A"}
+              </div>
+              <div style={priceItemStyle}>
+                Buy: ${tvShow.buyPrice?.toFixed(2) || "N/A"}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Similar TV Shows Section */}
-      <div style={similarShowsContainerStyle}>
-        <h2 style={similarShowsTitleStyle}>Similar TV Shows</h2>
-        <div style={gridStyle}>
-          {similarShows.map((similarShow) => (
-            <div
-              key={similarShow.id}
-              style={tvCardStyle}
-              onClick={() => navigate(`/tvdetails/${similarShow.id}`)} // Navigate to the similar TV show details
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <img
-                src={similarShow.poster}
-                alt={`Poster of ${similarShow.title}`}
-                style={tvImageStyle}
-              />
-              <h3 style={tvTitleStyle}>{similarShow.title}</h3>
-            </div>
-          ))}
+      {/* Similar Shows Section - Only show if there are similar shows */}
+      {similarShows.length > 0 && (
+        <div style={similarShowsContainerStyle}>
+          <h2 style={similarShowsTitleStyle}>Similar TV Shows</h2>
+          <div style={gridStyle}>
+            {similarShows.map((show) => (
+              <div
+                key={show.id}
+                style={tvCardStyle}
+                onClick={() => navigate(`/tvdetails/${show.id}`)}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                <img
+                  src={show.poster}
+                  alt={`Poster for ${show.title}`}
+                  style={tvImageStyle}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/default-poster.jpg";
+                  }}
+                />
+                <h3 style={tvTitleStyle}>
+                  {show.title || "Untitled Show"}
+                </h3>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
-    
   );
 };
 
