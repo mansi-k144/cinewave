@@ -10,41 +10,43 @@ const VideoStoreProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Enhanced fetch wrapper with CORS fixes
+  // Enhanced fetch wrapper with better error handling
   const authFetch = async (url, options = {}) => {
     const token = localStorage.getItem('token');
     const headers = {
       'Content-Type': 'application/json',
       ...options.headers,
     };
-
+  
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
-
+  
     try {
-      // Temporary proxy solution for development ONLY
-      const proxyUrl = ''; // Normally empty - use only if absolutely needed
-      const fullUrl = `${proxyUrl}${process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000'}${url}`;
-
+      // Force use of production backend URL
+      const backendUrl = 'https://cinewave-backend.onrender.com';
+      const fullUrl = `${backendUrl}${url}`;
+  
+      console.log('Making request to:', fullUrl);
+  
       const response = await fetch(fullUrl, {
         ...options,
-        headers,
-        mode: 'cors',
-        credentials: 'include'
+        headers
       });
-
+  
+      console.log('Response status:', response.status);
+  
       if (response.status === 401) {
         localStorage.removeItem('token');
         setUser(null);
         throw new Error('Session expired. Please log in again.');
       }
-
+  
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `Request failed with status ${response.status}`);
       }
-
+  
       return await response.json();
     } catch (error) {
       console.error('API request failed:', {
@@ -55,7 +57,7 @@ const VideoStoreProvider = ({ children }) => {
       throw error;
     }
   };
-
+  
   // Media data transformer
   const transformMedia = (media) => ({
     id: media.id,
@@ -95,32 +97,35 @@ const VideoStoreProvider = ({ children }) => {
 
   // Media data fetcher with robust error handling
   useEffect(() => {
-    const fetchMedia = async () => {
+    const fetchMedia = async (retryCount = 0) => {
       try {
         setLoading(true);
         setError(null);
-
-        // Debugging logs
-        console.log('Attempting to fetch media data...');
+        console.log('Fetching media data...'); // Debug log
         
         const [moviesData, tvShowsData] = await Promise.all([
-          authFetch('/api/media/movies').catch(() => {
-            console.warn('Movies fetch failed, using fallback');
+          authFetch('/api/media/movies').catch(error => {
+            console.warn('Movies fetch error:', error);
             return [];
           }),
-          authFetch('/api/media/tvshows').catch(() => {
-            console.warn('TV shows fetch failed, using fallback');
+          authFetch('/api/media/tvshows').catch(error => {
+            console.warn('TV shows fetch error:', error);
             return [];
           })
         ]);
 
-        console.log('Received data:', { moviesData, tvShowsData });
+        console.log('Fetched data:', { moviesData, tvShowsData }); // Debug log
+
+        // If no data and we haven't retried yet, try once more
+        if ((!moviesData || !tvShowsData) && retryCount < 1) {
+          return fetchMedia(retryCount + 1);
+        }
 
         setMovies(moviesData?.map(transformMedia) || []);
         setTVShows(tvShowsData?.map(transformMedia) || []);
       } catch (error) {
-        console.error('Media fetch error:', error);
-        setError('Failed to load media. Please check your connection.');
+        console.error('Media fetch failed:', error);
+        setError('Failed to load media. ' + error.message);
       } finally {
         setLoading(false);
       }
